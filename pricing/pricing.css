@@ -1,0 +1,33 @@
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.container {
+  max-width: 960px;
+}
+
+.lead {
+  margin-left: 0px;
+}
+
+.card-img {
+  height: 450px;
+  width: 450px;
+}
+
+.pricing-header {
+  max-width: 700px;
+}
+
+.card-body {
+  height: 400px;
+}
+
+.card-deck .card {
+  min-width: 220px;
+}

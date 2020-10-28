@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.0.1">
+    <title>Ideological-Machine</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/pricing/">
+
+    <!-- Bootstrap core CSS -->
+<link href="../assets/dist/css/bootstrap.css" rel="stylesheet">
+<script src="../static/node_modules/chart.js/dist/Chart.js"></script>
+<script src="../static/node_modules/chartjs-plugin-annotation/chartjs-plugin-annotation.js"></script>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="pricing.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+  <h5 class="my-0 mr-md-auto font-weight-normal"> Moral Machine </h5>
+  <nav class="my-2 my-md-0 mr-md-3">
+    <!-- <a class="p-2 text-dark" href="#">Home</a> -->
+    <!-- <a class="p-2 text-dark" href="#">Enterprise</a>
+    <a class="p-2 text-dark" href="#">Support</a>
+    <a class="p-2 text-dark" href="#">Pricing</a> -->
+  </nav>
+  <a class="btn btn-outline-primary" href="#"> Home </a>
+</div>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 id="scenario" class="display-4">Scenario 1</h1>
+  <p id="question" class="lead"> </p>
+  <p id="results" class="lead"> hey </p>
+</div>
+
+<div id="main_container" class="container">
+  <div class="card-deck mb-3 text-center">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Choice 1</h4>
+      </div>
+      <img id="img1" src="" class="card-img" alt="...">
+      <div class="card-footer">
+        <button type="button" onclick="showNewQuestion(0)" class="btn btn-lg btn-block btn-outline-primary">Select</button>
+      </div>
+    </div>
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Choice 2</h4>
+      </div>
+      <img id="img2" src="" class="card-img" alt="...">
+      <div class="card-footer">
+        <button type="button" onclick="showNewQuestion(1)" class="btn btn-lg btn-block btn-outline-primary">Select</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+      <div class="col-12 col-md">
+        <img class="mb-2" src="../assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+        <small class="d-block mb-3 text-muted">&copy; 2017-2020</small>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Features</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">Cool stuff</a></li>
+          <li><a class="text-muted" href="#">Random feature</a></li>
+          <li><a class="text-muted" href="#">Team feature</a></li>
+          <li><a class="text-muted" href="#">Stuff for developers</a></li>
+          <li><a class="text-muted" href="#">Another one</a></li>
+          <li><a class="text-muted" href="#">Last time</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Resources</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">Resource</a></li>
+          <li><a class="text-muted" href="#">Resource name</a></li>
+          <li><a class="text-muted" href="#">Another resource</a></li>
+          <li><a class="text-muted" href="#">Final resource</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>About</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">Team</a></li>
+          <li><a class="text-muted" href="#">Locations</a></li>
+          <li><a class="text-muted" href="#">Privacy</a></li>
+          <li><a class="text-muted" href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer> -->
+</div>
+
+<script>
+
+//initial values
+var myChart;
+var questions = ["Someone with Covid is about to cough at a rich upper-class man and two poor people in the BTS. You can distribute masks to either of them. Choose who to save.", "1 doctor and 3 robbers","One 40 year old doctor and 1 young man."];
+var scenarios = ["Scenario 1", "Scenario 2", "Scenario 3"];
+
+//option 1
+var choices = [["img/rich_dude.jpeg","img/two_poor.jpeg"],["img/dog3.jpeg","img/dog4.jpeg"],["img/dog1.jpg","img/dog2.jpg"]];
+var choiceScores = [[[0,0,1],[1,0,0]],[[0,1,0],[1,0,0]],[[0,1,0],[1,0,0]]];
+
+var i = 1;
+var results = [];
+
+showFirstQuestion()
+// index 1 of every question, results should be {[0,0,1],[1,0,0],[1,0,0]}
+function showNewQuestion(chosenChoice) {
+  console.log(i)
+  console.log(choiceScores)
+  results.push(choiceScores[i-1][chosenChoice])
+  console.log(results)
+	if(i < questions.length) {
+      var curChoices = choices[i];
+      console.log("Entering loop")
+      console.log("Choices: "+choices[i])
+      showQuestion(i)
+        //go through choices here
+
+        //keep track of which button is clicked
+  		i+=1;
+    }else {
+  		 document.getElementById("results").innerHTML = "Done! show results here: "+results;
+       sumScores = [0,0,0]
+       for (var j=0; j<results.length;j++) {
+          console.log(results[j])
+          if (results[j][0] == 1) {
+              sumScores[0] = sumScores[0] + 1
+          }
+          else if (results[j][1] == 1) {
+              sumScores[1] = sumScores[1] + 1
+          }
+          else {
+              sumScores[2] = sumScores[2] + 1
+          }
+          console.log("sumScore: " + sumScores);
+       }
+       displayResults(sumScores);
+	 }
+}
+
+function showFirstQuestion() {
+   showQuestion(0)
+}
+
+function displayResults(scoreSum) {
+    ideologies = [" Libertarian", " Utilitarian,", " Capitalist"]
+    var container_element = document.getElementById("main_container");
+    container_element.parentNode.removeChild(container_element);
+    highest_scorer = Math.max.apply(null, sumScores)
+    ideology_list = []
+    ideology_dog = " ideology."
+
+    for (var i=0; i<sumScores.length; i++) {
+      if (highest_scorer == sumScores[i]) {
+        ideology_list.push(ideologies[i])
+      }
+    }
+
+    if (ideology_list.length > 1) {
+      var temp = ideologies[ideology_list.length-1]
+      ideology_list.push(temp)
+      ideology_list[ideology_list.length-2] = " and"
+      ideology_dog = " ideologies."
+    }
+
+    ideology_string = ideology_list.join(" ")
+
+
+
+    document.getElementById("question").innerHTML = "You have " + ideology_string + ideology_dog
+    document.getElementById("scenario").innerHTML = "Your Ideology Results";
+
+    var ctx = document.getElementById('myChart');
+    Chart.defaults.global.defaultFontSize = 17;
+    Chart.defaults.global.defaultFontColor = '#000000';
+    myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: ["Libertarian", "Utilitarian", "Capitalist"],
+            datasets: [{
+                data: scoreSum,
+                backgroundColor: ["red","blue","green"],
+                borderColor: [
+                    'rgba(192,192,192, 1)',
+                    'rgba(192,192,192, 1)',
+                    'rgba(192,192,192, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          title: {
+            display: true,
+            text: 'What Ideology are you?',
+            fontSize:20
+          },
+          annotation: {
+            annotations: [{
+              type: 'line',
+              mode: 'vertical',
+              scaleID: 'x-axis-0',
+              value: 0,
+              borderColor: 'rgb(75, 192, 192)',
+              borderWidth: 5,
+              label: {
+                enabled: false,
+              }
+            }],
+          },
+          scales: {
+              xAxes: [{scaleLabel: {
+                        display: true,
+                        labelString: 'PM 2.5 Breathed in total duration (Microgram)'},
+                  ticks: {
+                      suggestedMax: 10,
+                      beginAtZero: true
+                  }
+              }],
+              yAxes: [{scaleLabel: {
+                        display: true,
+                        labelString: 'Ideology'},
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+            }
+        }
+    });
+}
+
+function showQuestion(index) {
+    var curChoices = choices[index];
+    console.log(curChoices);
+    document.getElementById("question").innerHTML = questions[index];
+    document.getElementById("scenario").innerHTML = scenarios[index];
+    document.getElementById("img1").src = curChoices[0];
+    document.getElementById("img2").src = curChoices[1];
+}
+
+</script>
+
+<canvas id="myChart"></canvas>
+
+</body>
+</html>
