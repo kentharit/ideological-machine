@@ -11,9 +11,9 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/pricing/">
 
     <!-- Bootstrap core CSS -->
-<link href="../assets/dist/css/bootstrap.css" rel="stylesheet">
-<script src="../static/node_modules/chart.js/dist/Chart.js"></script>
-<script src="../static/node_modules/chartjs-plugin-annotation/chartjs-plugin-annotation.js"></script>
+<link href="assets/dist/css/bootstrap.css" rel="stylesheet">
+<script src="static/node_modules/chart.js/dist/Chart.js"></script>
+<script src="static/node_modules/chartjs-plugin-annotation/chartjs-plugin-annotation.js"></script>
 
     <style>
       .bd-placeholder-img {
@@ -49,7 +49,7 @@
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 id="scenario" class="display-4">Scenario 1</h1>
   <p id="question" class="lead"> </p>
-  <p id="results" class="lead"> hey </p>
+  <p id="results" class="lead"> </p>
 </div>
 
 <div id="main_container" class="container">
@@ -116,13 +116,14 @@
 <script>
 
 //initial values
+//[Libertarian, Utilitarian, Capitalist]
 var myChart;
-var questions = ["Someone with Covid is about to cough at a rich upper-class man and two poor people in the BTS. You can distribute masks to either of them. Choose who to save.", "1 doctor and 3 robbers","One 40 year old doctor and 1 young man."];
-var scenarios = ["Scenario 1", "Scenario 2", "Scenario 3"];
+var questions = ["A rich upper-class man and two poor people are in a crowded mall unknowingly with many people who have contracted COVID-19. You can distribute masks to either of them to protect them from the virus. Choose who to save.", "A young doctor and three robbers are in a BTS skytrain unknowingly with many people who have contracted Covid. You can distribute masks to either of them to protect them from the virus. Choose who to save.", "A sixty year-old doctor and the CEO of a multinational firm are in a cafe unknowingly with many people who have contracted Covid. You can distribute masks to either of them to protect them from the virus. Choose who to save.", "A father of 3 kids who is considered lower class and a single middle-aged rich factory owner are in a factory unknowingly with many people who have contracted Covid. You can distribute masks to either of them to protect them from the virus. Choose who to save.", "One of your family members and the CEO of a multinational firm are in a restaurant unknowingly with many people who have contracted Covid. You can distribute masks to either of them to protect them from the virus. Choose who to save.", "A masked-wearing man and a non mask-wearing man have both contracted COVID-19. Assuming you have the cure, choose who to save.", "You may enforce strict lockdowns in your country which will lead to lower economic activity and possibly a lower infection rate of COVID-19. Alternatively, you may also enforce lenient measures which will lead to higher economic activity and possibly a higher infection rate of COVID-19", "The government has money which can go either into investing in more vaccines (given that it will eventually be successful and benefit more people) or as transfer payments to people who have been unemployed due to COVID-19.", "You can either raise the income tax of the rich to fund unemployment benefits for people unemployed due to COVID or keep the income tax at the status quo." ];
+var scenarios = ["Scenario 1", "Scenario 2", "Scenario 3", "Scenario 4", "Scenario 5","Scenario 6","Scenario 7","Scenario 8","Scenario 9"];
 
 //option 1
-var choices = [["img/rich_dude.jpeg","img/two_poor.jpeg"],["img/dog3.jpeg","img/dog4.jpeg"],["img/dog1.jpg","img/dog2.jpg"]];
-var choiceScores = [[[0,0,1],[1,0,0]],[[0,1,0],[1,0,0]],[[0,1,0],[1,0,0]]];
+var choices = [["img/rich_dude.jpeg","img/two_poor.jpeg"],["img/young_doc.png","img/robber.jpeg"],["img/old_doc.png","img/ceo.jpeg"], ["img/father.jpeg","img/rich_dude.jpeg"], ["img/family.jpeg","img/ceo.jpeg"], ["img/not_masked.jpeg","img/masked.jpeg"], ["img/plane.jpeg","img/circular_flow.jpeg"], ["img/vaccine.jpeg","img/transfer_payments.jpeg"], ["img/income_tax.jpeg","img/status_quo.jpeg"]];
+var choiceScores = [[[0,0,1],[0,1,0]],[[0,1,0],[1,0,0]],[[0,1,0],[0,0,1]], [[1,0,0],[0,0,1]],[[1,0,0],[0,0,1]], [[1,0,0],[0,1,0]], [[0,0,1],[0,1,0]], [[1,0,0],[0,1,0]], [[1,0,0],[0,0,1]]];
 
 var i = 1;
 var results = [];
@@ -144,7 +145,7 @@ function showNewQuestion(chosenChoice) {
         //keep track of which button is clicked
   		i+=1;
     }else {
-  		 document.getElementById("results").innerHTML = "Done! show results here: "+results;
+  		 //document.getElementById("results").innerHTML = "Done! show results here: "+results;
        sumScores = [0,0,0]
        for (var j=0; j<results.length;j++) {
           console.log(results[j])
@@ -173,7 +174,7 @@ function displayResults(scoreSum) {
     container_element.parentNode.removeChild(container_element);
     highest_scorer = Math.max.apply(null, sumScores)
     ideology_list = []
-    ideology_dog = " ideology."
+    ideology_txt = " ideology."
 
     for (var i=0; i<sumScores.length; i++) {
       if (highest_scorer == sumScores[i]) {
@@ -185,14 +186,14 @@ function displayResults(scoreSum) {
       var temp = ideologies[ideology_list.length-1]
       ideology_list.push(temp)
       ideology_list[ideology_list.length-2] = " and"
-      ideology_dog = " ideologies."
+      ideology_txt = " ideologies."
     }
 
     ideology_string = ideology_list.join(" ")
 
 
 
-    document.getElementById("question").innerHTML = "You have " + ideology_string + ideology_dog
+    document.getElementById("question").innerHTML = "You have " + ideology_string + ideology_txt
     document.getElementById("scenario").innerHTML = "Your Ideology Results";
 
     var ctx = document.getElementById('myChart');
@@ -223,7 +224,7 @@ function displayResults(scoreSum) {
           title: {
             display: true,
             text: 'What Ideology are you?',
-            fontSize:20
+            fontSize: 20
           },
           annotation: {
             annotations: [{
@@ -271,6 +272,16 @@ function showQuestion(index) {
 </script>
 
 <canvas id="myChart"></canvas>
+
+<p> Ideologies </p>
+<ul>
+  <li> Capitalism: </li>
+  <li> Utilitarianism: </li>
+  <li> Libertarianism: </li>
+</ul>
+          
+
+
 
 </body>
 </html>
